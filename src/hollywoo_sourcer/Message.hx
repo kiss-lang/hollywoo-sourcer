@@ -1,4 +1,4 @@
-package pixabay_sourcer;
+package hollywoo_sourcer;
 
 typedef Message = {
     type:String,

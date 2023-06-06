@@ -1,9 +1,9 @@
-package pixabay_sourcer;
+package hollywoo_sourcer;
 
 import kiss.Prelude;
 import kiss_firefox.API;
 import haxe.Constraints;
-import pixabay_sourcer.Message;
+import hollywoo_sourcer.Message;
 import haxe.io.Path;
 import js.html.File;
 import js.html.URL;

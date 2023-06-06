@@ -2,7 +2,7 @@
     (API.browser.runtime.onMessage.addListener ->[:Message message sender sendResponse] 
         (let [:Function sendResponse sendResponse]
             (case message
-                ((object type "download" data [imageInfo])
+                ((object type "downloadPixabay" data [imageInfo])
                     // awaitLet the DownloadItem and make an object url with the source info
                     (awaitLet [dlItemId (API.browser.downloads.download (object saveAs true url imageInfo.largeImageURL))
                                 dlItems (API.browser.downloads.search (object id dlItemId))]

@@ -1,7 +1,7 @@
 {
 
   "manifest_version": 2,
-  "name": "pixabay-sourcer",
+  "name": "hollywoo-sourcer",
   "version": "0.0",
 
   "description": "",
@@ -11,8 +11,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://pixabay.com/photos/*/"],
-      "js": ["bin/browser-polyfill.js", "bin/main.js"]
+      "matches": ["https://pixabay.com/*/*/"],
+      "js": ["bin/browser-polyfill.js", "bin/pixabay.js"]
     }
   ],
   "background": {
