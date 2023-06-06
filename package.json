@@ -1,7 +1,7 @@
 {
-  "name": "template",
+  "name": "hollywoo-sourcer",
   "version": "0.0.0",
-  "description": "A Firefox extension made with Kisslang",
+  "description": "firefox extension to source hollywoo project assets from the web",
   "main": "index.js",
   "scripts": {
     "postinstall": "dts2hx --all --noLibWrap"
