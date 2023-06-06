@@ -9,7 +9,7 @@
                         (let [dlItem (first dlItems)
                                 fileName dlItem.filename
                                 txtFileName "$(Path.withoutDirectory (Path.withoutExtension fileName)).txt"
-                                txtContent "${imageInfo.pageURL}\t${imageInfo.user}\t${imageInfo.user_id}"
+                                txtContent "pixabay.com\t${imageInfo.user}\t${imageInfo.pageURL} user id ${imageInfo.user_id}"
                                 file (new File [txtContent] txtFileName)
                                 txtUrl (URL.createObjectURL file)]
                             (awaitLet [txtDownloadId (API.browser.downloads.download (object url txtUrl filename txtFileName))]
