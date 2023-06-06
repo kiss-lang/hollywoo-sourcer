@@ -1,4 +1,9 @@
 (function _main []
+    (API.browser.pageAction.onClicked.addListener
+        ->[tab clickData]
+            (API.browser.tabs.sendMessage
+                tab.id (object type "requestSource" data [])))
+
     (API.browser.runtime.onMessage.addListener ->[:Message message sender sendResponse] 
         (let [:Function sendResponse sendResponse]
             (case message
@@ -14,6 +19,7 @@
                                 txtUrl (URL.createObjectURL file)]
                             (awaitLet [txtDownloadId (API.browser.downloads.download (object url txtUrl filename txtFileName))]
                                 (catch [e] (sendResponse e))
-                                (API.browser.downloads.show txtDownloadId)))))
+                                (API.browser.downloads.show txtDownloadId)
+                                (sendResponse "done")))))
                 (never otherwise))
             true)))

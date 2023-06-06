@@ -26,6 +26,18 @@
 			"id": "{0d44525b-9803-4630-917d-585c3b538fcb}"
 		}
 	},
+
+  "page_action": {
+    "default_icon": {
+      "16": "icons/page-16.png",
+      "32": "icons/page-32.png"
+    },
+    "default_title": "Source this asset",
+    "show_matches": [
+      "https://pixabay.com/*/*/"
+    ]
+  },
+
 	"permissions": [
 		"<all_urls>",
 		"storage",

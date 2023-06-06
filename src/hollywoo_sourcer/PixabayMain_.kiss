@@ -11,7 +11,7 @@
 (function syncedStorage []
     (API.browser.storage.sync.get (object queries (new Map<String,Dynamic>))))
 
-(function queryId [:String id :Map<String,Dynamic> cache]
+(function :Void queryId [:String id :Map<String,Dynamic> cache]
     (let [request (new XHR)
             apiQuery "${API_URL}?key=${PIXABAY_PUBLIC_KEY}&id=$id"]
         (request.open "GET" apiQuery)
@@ -28,24 +28,22 @@
                         )))
         (request.send)))
 
-(function handleInfo [:Dynamic info]
+(function :Void handleInfo [:Dynamic info]
     (awaitLet [response (API.browser.runtime.sendMessage (object type "downloadPixabay" data [(first info.hits)]))]
         (print response)))
 
-(window.addEventListener "load"
-    ->:Void
-        (awaitLet [storage (syncedStorage)]
-            (let [:Map<String,Dynamic> cachedResults (dictGet storage "queries")
-                    :String url window.location.href
-                    parts (url.split "/")
-                    _ (parts.pop)
-                    titleAndId (parts.pop)
-                    id (.pop (titleAndId.split "-"))
-                    sourceLink (document.createElement "a")]
-                (set sourceLink.innerHTML "Source this image")
-                (sourceLink.addEventListener "click"
-                    ->:Void
+(API.browser.runtime.onMessage.addListener
+    ->[:Message message sender sendResponse] 
+        (case message
+            ((object type "requestSource")
+                (awaitLet [storage (syncedStorage)]
+                    (let [:Map<String,Dynamic> cachedResults (dictGet storage "queries")
+                            :String url window.location.href
+                            parts (url.split "/")
+                            _ (parts.pop)
+                            titleAndId (parts.pop)
+                            id (.pop (titleAndId.split "-"))]
                         (ifLet [cachedInfo (dictGet cachedResults id)]
                                 (handleInfo cachedInfo)
-                            (queryId id cachedResults)))
-                (document.body.prepend sourceLink))))
+                            (queryId id cachedResults)))))
+            (otherwise)))
