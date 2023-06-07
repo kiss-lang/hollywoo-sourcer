@@ -13,7 +13,7 @@
                                 dlItems (API.browser.downloads.search (object id dlItemId))]
                         (let [dlItem (first dlItems)
                                 fileName dlItem.filename
-                                txtFileName "$(Path.withoutDirectory (Path.withoutExtension fileName)).txt"
+                                txtFileName "$(Path.withoutDirectory (Path.withoutExtension fileName)).tsv"
                                 txtContent "pixabay.com\t${imageInfo.user}\t${imageInfo.pageURL} user id ${imageInfo.user_id}"
                                 file (new File [txtContent] txtFileName)
                                 txtUrl (URL.createObjectURL file)]
