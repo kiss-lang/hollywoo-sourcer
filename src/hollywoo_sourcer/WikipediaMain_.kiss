@@ -1,0 +1,23 @@
+(import kiss_firefox.API)
+(import js.lib.Promise)
+(importAs js.html.XMLHttpRequest XHR)
+(import hollywoo_sourcer.Message)
+(var :Dynamic document js.Lib.global.document)
+(var :Dynamic window js.Lib.global.window)
+
+(API.browser.runtime.onMessage.addListener
+    ->[:Message message sender sendResponse] 
+        (case message
+            ((object type "requestSource")
+                (let [:String url window.location.href
+                        parts (url.split ":")
+                        filename (parts.pop)
+                        imgTags (document.getElementsByTagName "img")]
+                    (doFor idx (range imgTags.length)
+                        (let [imgTag (imgTags.item idx)
+                                src (imgTag.getAttribute "src")]
+                            (when (StringTools.contains src filename)
+                                (awaitLet [response (API.browser.runtime.sendMessage (object type "downloadWikipedia" data [filename "https:${src}" url]))]
+                                    (print response))
+                                (break))))))
+            (otherwise)))

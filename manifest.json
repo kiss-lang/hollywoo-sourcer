@@ -13,6 +13,13 @@
     {
       "matches": ["https://pixabay.com/*/*/"],
       "js": ["bin/browser-polyfill.js", "bin/pixabay.js"]
+    },
+    {
+      "matches": [
+        "https://*.wikipedia.org/wiki/File:*",
+        "https://*.wikipedia.org/wiki/*"
+      ],
+      "js": ["bin/browser-polyfill.js", "bin/wikipedia.js"]
     }
   ],
   "background": {
@@ -34,7 +41,9 @@
     },
     "default_title": "Source this asset",
     "show_matches": [
-      "https://pixabay.com/*/*/"
+      "https://pixabay.com/*/*/",
+      "https://*.wikipedia.org/wiki/File:*",
+      "https://*.wikipedia.org/wiki/*"
     ]
   },
 
