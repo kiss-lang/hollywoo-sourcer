@@ -4,12 +4,20 @@
 -cp src
 -dce full
 --each
+
 --main hollywoo_sourcer.PixabayMain
 --js bin/pixabay.js
 --next
+
 --main hollywoo_sourcer.WikipediaMain
 --js bin/wikipedia.js
 --next
+
+--main hollywoo_sourcer.FreesoundMain
+--js bin/freesound.js
+--next
+
+
 --main hollywoo_sourcer.Background
 --js bin/background.js
--cmd cp node_modules/webextension-polyfill/dist/browser-polyfill.js* bin/ && zip -r hollywoo-sourcer.zip . -x *.git* -x *.hxml -x *.zip -x src/\* -x node_modules/\* -x libs/\* -x test.sh
+-cmd cp node_modules/webextension-polyfill/dist/browser-polyfill.js* bin/ && zip -r hollywoo-sourcer.zip . -x *.git* -x *.hxml -x *.zip -x src/\* -x node_modules/\* -x libs/\* -x test.sh -x externs/\*

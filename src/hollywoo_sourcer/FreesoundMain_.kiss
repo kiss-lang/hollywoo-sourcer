@@ -1,0 +1,20 @@
+(import kiss_firefox.API)
+(import js.lib.Promise)
+(importAs js.html.XMLHttpRequest XHR)
+(import hollywoo_sourcer.Message)
+(var :Dynamic document js.Lib.global.document)
+(var :Dynamic window js.Lib.global.window)
+
+(API.browser.runtime.onMessage.addListener
+    ->[:Message message sender sendResponse] 
+        (case message
+            ((object type "requestSource")
+                (let [:String url window.location.href
+                        :kiss.List<String> parts (url.split "/")
+                        creator (nth parts -4)
+                        downloadLink (document.getElementById "download_button")
+                        dlUrl .href downloadLink
+                        filename (.pop (url.split "/"))]
+                    (awaitLet [response (API.browser.runtime.sendMessage (object type "downloadFreesound" data [filename creator dlUrl url]))]
+                        (print response))))
+            (otherwise)))

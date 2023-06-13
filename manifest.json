@@ -20,6 +20,12 @@
         "https://*.wikipedia.org/wiki/*"
       ],
       "js": ["bin/browser-polyfill.js", "bin/wikipedia.js"]
+    },
+    {
+      "matches": [
+        "https://freesound.org/people/*/sounds/*/"
+      ],
+      "js": ["bin/browser-polyfill.js", "bin/freesound.js"]
     }
   ],
   "background": {
@@ -43,7 +49,8 @@
     "show_matches": [
       "https://pixabay.com/*/*/",
       "https://*.wikipedia.org/wiki/File:*",
-      "https://*.wikipedia.org/wiki/*"
+      "https://*.wikipedia.org/wiki/*",
+      "https://freesound.org/people/*/sounds/*/"
     ]
   },
 
