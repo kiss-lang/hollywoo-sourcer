@@ -1,6 +1,7 @@
 (import kiss_firefox.API)
 (import js.lib.Promise)
 (importAs js.html.XMLHttpRequest XHR)
+(import js.html.HTMLCollection)
 (import hollywoo_sourcer.Message)
 (var :Dynamic document js.Lib.global.document)
 (var :Dynamic window js.Lib.global.window)
@@ -47,3 +48,11 @@
                                 (handleInfo cachedInfo)
                             (queryId id cachedResults)))))
             (otherwise)))
+
+// Filter the iStock divs!
+(window.addEventListener "load"
+    ->(let [:HTMLCollection divs (document.getElementsByTagName "div")]
+        (doFor i (range divs.length)
+            (let [div (divs.item i)]
+                (when (and (div.className.contains "title") (div.innerHTML.contains "Sponsored Images iStock"))
+                    (set div.parentElement.hidden true))))))
