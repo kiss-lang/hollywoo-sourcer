@@ -1,0 +1,29 @@
+(import kiss_firefox.API)
+(import js.lib.Promise)
+(importAs js.html.XMLHttpRequest XHR)
+(import js.html.HTMLCollection)
+(import hollywoo_sourcer.Message)
+(var :Dynamic document js.Lib.global.document)
+(var :Dynamic window js.Lib.global.window)
+
+(API.browser.runtime.onMessage.addListener
+    ->[:Message message sender sendResponse] 
+        (case message
+            ((object type "requestSource")
+                (let [sourceUrl window.location.href
+                        fieldLabelDivs (document.getElementsByClassName "field-label")
+                        getCreditsHeadingDiv ->{
+                                                    (doFor i (range fieldLabelDivs.length)
+                                                        (when (= "Copyright/Attribution Notice: " .innerText (fieldLabelDivs.item i))
+                                                            (return (fieldLabelDivs.item i))))
+                                                    null
+                                                }
+                        creditsHeadingDiv (getCreditsHeadingDiv)
+                        creditsDiv (creditsHeadingDiv.parentElement.childNodes.item 1)
+                        credit creditsDiv.innerText
+                        fileSpans (document.getElementsByClassName "file")
+                        fileUrls (for i (range fileSpans.length)
+                                    (Reflect.field (.item .childNodes (fileSpans.item i) 2) "href"))]
+                    (awaitLet [response (API.browser.runtime.sendMessage (object type "downloadOpenGameArt" data [fileUrls credit sourceUrl]))]
+                            (print response))))
+            (otherwise)))

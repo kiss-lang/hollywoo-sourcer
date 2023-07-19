@@ -26,6 +26,12 @@
         "https://freesound.org/people/*/sounds/*/"
       ],
       "js": ["bin/browser-polyfill.js", "bin/freesound.js"]
+    },
+    {
+      "matches": [
+        "https://opengameart.org/content/*"
+      ],
+      "js": ["bin/browser-polyfill.js", "bin/opengameart.js"]
     }
   ],
   "background": {
@@ -50,7 +56,8 @@
       "https://pixabay.com/*/*/",
       "https://*.wikipedia.org/wiki/File:*",
       "https://*.wikipedia.org/wiki/*",
-      "https://freesound.org/people/*/sounds/*/"
+      "https://freesound.org/people/*/sounds/*/",
+      "https://opengameart.org/content/*"
     ]
   },
 

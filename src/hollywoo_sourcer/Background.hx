@@ -7,6 +7,7 @@ import hollywoo_sourcer.Message;
 import haxe.io.Path;
 import js.html.File;
 import js.html.URL;
+import js.lib.Promise;
 
 @:build(kiss.Kiss.build())
 class Background {

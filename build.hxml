@@ -17,6 +17,9 @@
 --js bin/freesound.js
 --next
 
+--main hollywoo_sourcer.OpenGameArtMain
+--js bin/opengameart.js
+--next
 
 --main hollywoo_sourcer.Background
 --js bin/background.js

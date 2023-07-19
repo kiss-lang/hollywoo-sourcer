@@ -49,5 +49,21 @@
                                 (catch [e] (sendResponse e))
                                 (API.browser.downloads.show txtDownloadId)
                                 (sendResponse "done")))))
+                ((object type "downloadOpenGameArt" data [fileUrls creditAttributionNotice sourceUrl])
+                    // awaitLet the DownloadItem and make an object url with the source info
+                    (awaitLet [&sync :Array<String> fileUrls fileUrls
+                                dlItemIds (Promise.all (for fileUrl fileUrls (API.browser.downloads.download (object saveAs true url fileUrl))))
+                                dlItemsAll (Promise.all (for dlItemId dlItemIds (API.browser.downloads.search (object id dlItemId))))]
+                        (doFor dlItems dlItemsAll
+                            (let [dlItem (first dlItems)
+                                    fileName dlItem.filename
+                                    txtFileName "$(Path.withoutDirectory (Path.withoutExtension fileName)).tsv"
+                                    txtContent "opengameart.org\t${creditAttributionNotice}\t${sourceUrl}"
+                                    file (new File [txtContent] txtFileName)
+                                    txtUrl (URL.createObjectURL file)]
+                                (awaitLet [txtDownloadId (API.browser.downloads.download (object url txtUrl filename txtFileName))]
+                                    (catch [e] (sendResponse e))
+                                    (API.browser.downloads.show txtDownloadId)
+                                    (sendResponse "done"))))))
                 (never otherwise))
             true)))
