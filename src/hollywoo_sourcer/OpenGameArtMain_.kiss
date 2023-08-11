@@ -16,6 +16,10 @@
                                                     (doFor i (range fieldLabelDivs.length)
                                                         (when (= "Copyright/Attribution Notice: " .innerText (fieldLabelDivs.item i))
                                                             (return (fieldLabelDivs.item i))))
+                                                    // If there is no explicit Copyright notice, get the author:
+                                                    (doFor i (range fieldLabelDivs.length)
+                                                        (when (= "Author: " .innerText (fieldLabelDivs.item i))
+                                                            (return (fieldLabelDivs.item i))))
                                                     null
                                                 }
                         creditsHeadingDiv (getCreditsHeadingDiv)
