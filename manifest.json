@@ -11,6 +11,10 @@
   },
   "content_scripts": [
     {
+      "matches": ["https://openclipart.org/detail/*/*"],
+      "js": ["bin/browser-polyfill.js", "bin/openclipart.js"]
+    },
+    {
       "matches": ["https://pixabay.com/*/*/"],
       "js": ["bin/browser-polyfill.js", "bin/pixabay.js"]
     },
@@ -57,7 +61,8 @@
       "https://*.wikipedia.org/wiki/File:*",
       "https://*.wikipedia.org/wiki/*",
       "https://freesound.org/people/*/sounds/*/",
-      "https://opengameart.org/content/*"
+      "https://opengameart.org/content/*",
+      "https://openclipart.org/detail/*/*"
     ]
   },
 

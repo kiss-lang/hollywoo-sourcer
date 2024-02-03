@@ -5,6 +5,10 @@
 -dce full
 --each
 
+--main hollywoo_sourcer.OpenClipArtMain
+--js bin/openclipart.js
+--next
+
 --main hollywoo_sourcer.PixabayMain
 --js bin/pixabay.js
 --next

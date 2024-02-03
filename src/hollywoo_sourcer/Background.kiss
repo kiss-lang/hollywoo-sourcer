@@ -4,7 +4,7 @@
             (API.browser.tabs.sendMessage
                 tab.id (object type "requestSource" data [])))
 
-    (API.browser.runtime.onMessage.addListener ->[:Message message sender sendResponse] 
+    (API.browser.runtime.onMessage.addListener ->[:Message message sender sendResponse]
         (let [:Function sendResponse sendResponse]
             (case message
                 ((object type "downloadPixabay" data [imageInfo])
@@ -65,5 +65,19 @@
                                     (catch [e] (sendResponse e))
                                     (API.browser.downloads.show txtDownloadId)
                                     (sendResponse "done"))))))
+                ((object type "downloadOpenClipArt" data [sourceUrl filename creator fileUrl])
+                    // awaitLet the DownloadItem and make an object url with the source info
+                    (awaitLet [dlItemId (API.browser.downloads.download (object saveAs true url fileUrl filename "${filename}.png"))
+                                dlItems (API.browser.downloads.search (object id dlItemId))]
+                        (let [dlItem (first dlItems)
+                                fileName dlItem.filename
+                                txtFileName "$(Path.withoutDirectory (Path.withoutExtension fileName)).tsv"
+                                txtContent "openclipart.org\t${creator}\t${sourceUrl}"
+                                file (new File [txtContent] txtFileName)
+                                txtUrl (URL.createObjectURL file)]
+                            (awaitLet [txtDownloadId (API.browser.downloads.download (object url txtUrl filename txtFileName))]
+                                (catch [e] (sendResponse e))
+                                (API.browser.downloads.show txtDownloadId)
+                                (sendResponse "done")))))
                 (never otherwise))
             true)))

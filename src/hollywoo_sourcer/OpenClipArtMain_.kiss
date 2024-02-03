@@ -1,0 +1,21 @@
+(import kiss_firefox.API)
+(import js.lib.Promise)
+(importAs js.html.XMLHttpRequest XHR)
+(import js.html.HTMLCollection)
+(import hollywoo_sourcer.Message)
+(var :Dynamic document js.Lib.global.document)
+(var :Dynamic window js.Lib.global.window)
+
+(API.browser.runtime.onMessage.addListener
+    ->[:Message message sender sendResponse]
+        (case message
+            ((object type "requestSource")
+                (let [url window.location.href
+                        title .innerHTML (.item (document.getElementsByTagName "h2") 0)
+                        links (document.getElementsByTagName "a")
+                        links (for idx (range links.length) (links.item idx))
+                        artist .innerHTML (first (filter links ->[:Dynamic link] (StringTools.contains link.href "/artist/")))
+                        fileUrl .href (first (filter links ->[:Dynamic link] (= link.innerHTML "Large")))]
+                    (awaitLet [response (API.browser.runtime.sendMessage (object type "downloadOpenClipArt" data [url title artist fileUrl]))]
+                        (print response))))
+            (otherwise)))
