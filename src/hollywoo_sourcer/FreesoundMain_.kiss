@@ -6,13 +6,13 @@
 (var :Dynamic window js.Lib.global.window)
 
 (API.browser.runtime.onMessage.addListener
-    ->[:Message message sender sendResponse] 
+    ->[:Message message sender sendResponse]
         (case message
             ((object type "requestSource")
                 (let [:String url window.location.href
                         :kiss.List<String> parts (url.split "/")
                         creator (nth parts -4)
-                        downloadLink (document.getElementById "download_button")
+                        downloadLink (.item (document.getElementsByClassName "sound-download-button") 0)
                         dlUrl .href downloadLink
                         filename (.pop (url.split "/"))]
                     (awaitLet [response (API.browser.runtime.sendMessage (object type "downloadFreesound" data [filename creator dlUrl url]))]
