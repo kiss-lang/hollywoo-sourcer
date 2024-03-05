@@ -67,7 +67,7 @@
   },
 
 	"permissions": [
-		"<all_urls>",
+		"activeTab",
 		"storage",
     "downloads"
 	]
